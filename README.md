@@ -4,4 +4,4 @@ This is simple project with console interface imitating the warehouse system wit
 The project made with UML diagrams as it is the part of co-named course.
 
 ## Class Diagram
-![Class Diagram](https://github.com/AnastasiaSperanskaya/WarehouseSystemUML/UML/classDiagram.png)
+![Class Diagram](https://github.com/AnastasiaSperanskaya/WarehouseSystemUML/blob/main/UML/classDiagram.png)
