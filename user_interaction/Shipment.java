@@ -1,4 +1,6 @@
 package user_interaction;
+import entities.ProductUnit;
+
 import java.util.Scanner;
 
 public class Shipment {
@@ -14,6 +16,8 @@ public class Shipment {
             int count = my_scan.nextInt();
 
             for(int i = 0; i < count; i++) {
+                ProductUnit product = new ProductUnit();
+
 
 
                 System.out.println("Enter product's id: ");
