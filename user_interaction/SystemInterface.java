@@ -7,8 +7,8 @@ public class SystemInterface {
         Scanner my_scan = new Scanner(System.in);
 
         while (true) {
-            System.out.println("What type if service would you like to use?");
-            System.out.println("[ shipment / arrival / managing / exit]");
+            System.out.println("What type of service would you like to use?");
+            System.out.println("[ shipment / arrival / managing / exit ]");
             System.out.println();
 
             String input = my_scan.nextLine();
