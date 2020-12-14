@@ -1,3 +1,5 @@
+package managers;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -14,6 +16,8 @@ public class DBManager {
         Driver driver = new FabricMySQLDriver();
         DriverManager.registerDriver(driver);
         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+        //connection.close();
     }
 
     public static void main(String[] args) throws SQLException {

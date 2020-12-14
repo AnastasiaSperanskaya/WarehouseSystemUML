@@ -1,3 +1,5 @@
+package user_interaction;
+
 import java.util.Scanner;
 
 public class SystemInterface {
