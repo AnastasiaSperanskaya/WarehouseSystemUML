@@ -1,9 +1,10 @@
 package user_interaction;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class SystemInterface {
-    public static void main (String[] args) {
+    public static void main (String[] args) throws SQLException {
         Scanner my_scan = new Scanner(System.in);
 
         while (true) {

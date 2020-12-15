@@ -10,6 +10,7 @@ public class ProductUnit {
     public static Provider provider;
     public static double amount_kg;
     public static boolean isUnique;
+    //public static String type; //type can be - ship / arrive / none
 
     public static void changeAmount(String sign, double amount) {
         if(sign.equals("-")) ProductUnit.amount_kg = ProductUnit.amount_kg - amount;
