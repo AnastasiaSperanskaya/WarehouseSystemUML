@@ -5,14 +5,14 @@ import java.util.Scanner;
 
 public class SystemInterface {
     public static void main (String[] args) throws SQLException {
-        Scanner my_scan = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("What type of service would you like to use?");
             System.out.println("[ shipment / arrival / managing / exit ]");
             System.out.println();
 
-            String input = my_scan.nextLine();
+            String input = scanner.nextLine();
             input = input.toLowerCase();
 
             if (input.equals("shipment")) {
