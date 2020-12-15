@@ -58,11 +58,7 @@ public class Arrival {
 
                 dbmanager.setProductUnit(product);
                 dbmanager.setOrderToArrive(product.getProductID(), orderID, providerID);
-                //in arrival vice-versa: first we will be adding product in product_unit table and ALSO in orders
-                //table with type = arrival
-                //product.productID = Integer.parseInt(input);
             }
-
             System.out.println("Are there more applications to leave?");
             System.out.println("[ yes / no ]");
             String input;

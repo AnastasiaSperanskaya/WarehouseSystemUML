@@ -7,9 +7,9 @@ public class ProductUnit {
     private int height_cm;
     private int width_cm;
     private int length_cm;
-    //private Provider provider;
     private double amount_kg;
     private boolean isUnique;
+    //private Provider provider;
     //public String type; //type can be - ship / arrive / none
 
     public ProductUnit() { }
