@@ -3,11 +3,12 @@ package managers;
 import entities.OrderToArrive;
 import entities.OrderToShip;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrdersManager {
-    private List<OrderToShip> ordersToShip;
-    private List<OrderToArrive> ordersToArrive;
+    private List<OrderToShip> ordersToShip = new ArrayList<OrderToShip>();
+    private List<OrderToArrive> ordersToArrive = new ArrayList<OrderToArrive>();
 
     public List<OrderToShip> getOrdersToShip() {
         return ordersToShip;

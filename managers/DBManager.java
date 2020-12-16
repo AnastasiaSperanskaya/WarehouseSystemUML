@@ -73,6 +73,7 @@ public class DBManager {
         int customerID;
         int productID;
         int providerID;
+        int orderID;
         OrdersManager orders = new OrdersManager();
         Connection connection = connectDB();
         Statement statement = connection.createStatement();
@@ -91,12 +92,14 @@ public class DBManager {
 
                 customerID = ordersToShip.getInt("customerID");
                 productID = ordersToShip.getInt("productID");
+                orderID = ordersToShip.getInt("orderID");
 
                 Client customer = getCustomerByID(customerID);
                 ProductUnit product = getProductUnitByID(productID);
 
                 orderToShip.setCustomer(customer);
                 orderToShip.setProduct(product);
+                orderToShip.setOrderID(orderID);
 
                 orders.setOrderToShip(orderToShip);
             }
@@ -110,12 +113,14 @@ public class DBManager {
 
                 providerID = ordersToArrive.getInt("providerID");
                 productID = ordersToArrive.getInt("productID");
+                orderID = ordersToArrive.getInt("orderID");
 
-                Client provider = getCustomerByID(providerID);
+                Client provider = getProviderByID(providerID);
                 ProductUnit product = getProductUnitByID(productID);
 
                 orderToArrive.setProvider(provider);
                 orderToArrive.setProduct(product);
+                orderToArrive.setOrderID(orderID);
 
                 orders.setOrderToArrive(orderToArrive);
             }
@@ -124,20 +129,64 @@ public class DBManager {
         return orders;
     }
 
-    public ProductUnit getProductUnitByID(int productId) {
+    public ProductUnit getProductUnitByID(int productId) throws SQLException {
         ProductUnit product = new ProductUnit();
+
+        Connection connection = connectDB();
+        PreparedStatement statement = null;
+        statement = connection.prepareStatement("SELECT * FROM product_unit where productID = ?");
+        statement.setInt(1, productId);
+        ResultSet productUnit = statement.executeQuery();
+
+        while(productUnit.next()) {
+            product.setAmount_kg(productUnit.getInt("amount_kg"));
+            product.setHeight_cm(productUnit.getInt("height_cm"));
+            product.setLength_cm(productUnit.getInt("length_cm"));
+            product.setWidth_cm(productUnit.getInt("width_cm"));
+            product.setProductID(productUnit.getInt("productID"));
+            product.setPlaceID(productUnit.getInt("placeID"));
+            product.setUnique(productUnit.getBoolean("is_unique"));
+        }
 
         return product;
     }
 
-    public Client getCustomerByID(int customerId) {
+    public Client getCustomerByID(int customerId) throws SQLException {
         Client customer = new Client();
+
+        Connection connection = connectDB();
+        PreparedStatement statement = null;
+        statement = connection.prepareStatement("SELECT * FROM customers where customerID = ?");
+        statement.setInt(1, customerId);
+        ResultSet customer_rs = statement.executeQuery();
+
+        while(customer_rs.next()) {
+            customer.setAddress(customer_rs.getString("address"));
+            customer.setClientID(customer_rs.getInt("customerID"));
+            customer.setMail(customer_rs.getString("email"));
+            customer.setName(customer_rs.getString("name"));
+            customer.setPhone(customer_rs.getString("phone_number"));
+        }
 
         return customer;
     }
 
-    public Client getProviderByID(int providerId) {
+    public Client getProviderByID(int providerId) throws SQLException {
         Client provider = new Client();
+
+        Connection connection = connectDB();
+        PreparedStatement statement = null;
+        statement = connection.prepareStatement("SELECT * FROM providers where providerID = ?");
+        statement.setInt(1, providerId);
+        ResultSet provider_rs = statement.executeQuery();
+
+        while(provider_rs.next()) {
+            provider.setAddress(provider_rs.getString("address"));
+            provider.setClientID(provider_rs.getInt("providerID"));
+            provider.setMail(provider_rs.getString("email"));
+            provider.setName(provider_rs.getString("name"));
+            provider.setPhone(provider_rs.getString("phone_number"));
+        }
 
         return provider;
     }
@@ -145,5 +194,10 @@ public class DBManager {
     public static void main(String[] args) throws SQLException {
         DBManager manager = new DBManager();
         OrdersManager orders = manager.getOrders();
+
+        System.out.println(orders.toString());
+
+        ProductUnit product = manager.getProductUnitByID(3);
+        System.out.println(product.toString());
     }
 }

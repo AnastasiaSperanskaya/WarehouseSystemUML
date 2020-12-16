@@ -7,6 +7,10 @@ public class ProductUnit {
     private int height_cm;
     private int width_cm;
     private int length_cm;
+    private double amount_kg;
+    private boolean isUnique;
+    //private Provider provider;
+    //public String type; //type can be - ship / arrive / none
 
     @Override
     public String toString() {
@@ -21,11 +25,6 @@ public class ProductUnit {
                 ", isUnique=" + isUnique +
                 '}';
     }
-
-    private double amount_kg;
-    private boolean isUnique;
-    //private Provider provider;
-    //public String type; //type can be - ship / arrive / none
 
     public ProductUnit() { }
 

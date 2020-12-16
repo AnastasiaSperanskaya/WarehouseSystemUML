@@ -1,20 +1,60 @@
 package entities;
 
 public class Client {
-    private ContactInfo info;
+    private int clientID;
+    private String mail;
+    private String phone;
+    private String address;
+    private String name;
+
+    public int getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(int clientID) {
+        this.clientID = clientID;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public String toString() {
         return "Client{" +
-                "info=" + info +
+                "clientID=" + clientID +
+                ", mail='" + mail + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", name='" + name + '\'' +
                 '}';
-    }
-
-    public ContactInfo getInfo() {
-        return info;
-    }
-
-    public void setInfo(ContactInfo info) {
-        this.info = info;
     }
 }
