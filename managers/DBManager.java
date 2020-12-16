@@ -1,6 +1,11 @@
 package managers;
+import java.awt.*;
 import java.sql.*;
+
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
+import entities.Client;
+import entities.OrderToArrive;
+import entities.OrderToShip;
 import entities.ProductUnit;
 
 public class DBManager {
@@ -63,11 +68,82 @@ public class DBManager {
         statement.executeUpdate();
     }
 
-    public static void main(String[] args) throws SQLException {
-        Connection connection = connectDB();
+    public OrdersManager getOrders() throws SQLException {
 
-        DBManager dbmanager = new DBManager();
-        int id = dbmanager.getAvailableOrderID();
-        System.out.println(id);
+        int customerID;
+        int productID;
+        int providerID;
+        OrdersManager orders = new OrdersManager();
+        Connection connection = connectDB();
+        Statement statement = connection.createStatement();
+        String sql = "SELECT DISTINCT orderID from orders;";
+        ResultSet rs = statement.executeQuery(sql);
+
+        while (rs.next()) {
+            int i = rs.getInt("orderID");
+
+            PreparedStatement shipments = null;
+            shipments = connection.prepareStatement("SELECT * FROM orders where orderID = ? and type = 'ship' ");
+            shipments.setInt(1, i);
+            ResultSet ordersToShip = shipments.executeQuery();
+            while (ordersToShip.next()) {
+                OrderToShip orderToShip = new OrderToShip();
+
+                customerID = ordersToShip.getInt("customerID");
+                productID = ordersToShip.getInt("productID");
+
+                Client customer = getCustomerByID(customerID);
+                ProductUnit product = getProductUnitByID(productID);
+
+                orderToShip.setCustomer(customer);
+                orderToShip.setProduct(product);
+
+                orders.setOrderToShip(orderToShip);
+            }
+
+            PreparedStatement arrivals = null;
+            arrivals = connection.prepareStatement("SELECT * FROM orders where orderID = ? and type = 'arrive' ");
+            arrivals.setInt(1, i);
+            ResultSet ordersToArrive = arrivals.executeQuery();
+            while (ordersToArrive.next()) {
+                OrderToArrive orderToArrive = new OrderToArrive();
+
+                providerID = ordersToArrive.getInt("providerID");
+                productID = ordersToArrive.getInt("productID");
+
+                Client provider = getCustomerByID(providerID);
+                ProductUnit product = getProductUnitByID(productID);
+
+                orderToArrive.setProvider(provider);
+                orderToArrive.setProduct(product);
+
+                orders.setOrderToArrive(orderToArrive);
+            }
+        }
+
+        return orders;
+    }
+
+    public ProductUnit getProductUnitByID(int productId) {
+        ProductUnit product = new ProductUnit();
+
+        return product;
+    }
+
+    public Client getCustomerByID(int customerId) {
+        Client customer = new Client();
+
+        return customer;
+    }
+
+    public Client getProviderByID(int providerId) {
+        Client provider = new Client();
+
+        return provider;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        DBManager manager = new DBManager();
+        OrdersManager orders = manager.getOrders();
     }
 }

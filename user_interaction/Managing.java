@@ -1,15 +1,21 @@
 package user_interaction;
+import managers.DBManager;
+import managers.OrdersManager;
+
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Managing {
-    public static void run() {
+    public static void run() throws SQLException {
         //this class was made to ship products or receive delivered ones
+
         System.out.println("What kind of order do you want to execute?");
         System.out.println("[ shipment / arrival ]");
         System.out.println();
 
+        DBManager manager = new DBManager();
         //here we must make new OrderManager class and get lists of orders to arrive and to ship
+        OrdersManager orders = manager.getOrders();
 
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();

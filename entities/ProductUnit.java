@@ -7,6 +7,21 @@ public class ProductUnit {
     private int height_cm;
     private int width_cm;
     private int length_cm;
+
+    @Override
+    public String toString() {
+        return "ProductUnit{" +
+                "productID=" + productID +
+                ", placeID=" + placeID +
+                ", barCode=" + barCode +
+                ", height_cm=" + height_cm +
+                ", width_cm=" + width_cm +
+                ", length_cm=" + length_cm +
+                ", amount_kg=" + amount_kg +
+                ", isUnique=" + isUnique +
+                '}';
+    }
+
     private double amount_kg;
     private boolean isUnique;
     //private Provider provider;
