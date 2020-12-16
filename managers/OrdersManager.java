@@ -36,9 +36,9 @@ public class OrdersManager {
 
     @Override
     public String toString() {
-        return "OrdersManager{" +
-                "ordersToShip=" + ordersToShip +
-                ", ordersToArrive=" + ordersToArrive +
+        return "OrdersManager{" + "\n" +
+                "ordersToShip=" + ordersToShip + "\n" + "\n" +
+                "ordersToArrive=" + ordersToArrive +
                 '}';
     }
 }

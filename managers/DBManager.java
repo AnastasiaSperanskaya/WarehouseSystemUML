@@ -191,13 +191,39 @@ public class DBManager {
         return provider;
     }
 
+    public void deleteProductUnitByID(int productID) throws SQLException {
+        Connection connection = connectDB();
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM product_unit WHERE productID = ?");
+        statement.setInt(1, productID);
+        statement.executeUpdate();
+    }
+
+    public void deleteOrderByID(int orderID) throws SQLException {
+        Connection connection = connectDB();
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE orderID = ?");
+        statement.setInt(1, orderID);
+        statement.executeUpdate();
+    }
+
+    public void freePlace(int productID) throws SQLException {
+        Connection connection = connectDB();
+        PreparedStatement statement = connection.prepareStatement("UPDATE place SET productID = NULL WHERE productID = ?");
+        statement.setInt(1, productID);
+        statement.executeUpdate();
+    }
+
+    public void setProductUnitStatus(int productID, String status) throws SQLException {
+        Connection connection = connectDB();
+        PreparedStatement statement = connection.prepareStatement("UPDATE product_unit SET status = ? WHERE productID = ?");
+        statement.setInt(2, productID);
+        statement.setString(1, status);
+        statement.executeUpdate();
+    }
+
     public static void main(String[] args) throws SQLException {
         DBManager manager = new DBManager();
         OrdersManager orders = manager.getOrders();
 
         System.out.println(orders.toString());
-
-        ProductUnit product = manager.getProductUnitByID(3);
-        System.out.println(product.toString());
     }
 }

@@ -9,8 +9,7 @@ public class ProductUnit {
     private int length_cm;
     private double amount_kg;
     private boolean isUnique;
-    //private Provider provider;
-    //public String type; //type can be - ship / arrive / none
+    public String status = "waiting for arrival"; // waiting for arrival / arrived / waiting for shipment / shipped
 
     @Override
     public String toString() {
@@ -24,6 +23,14 @@ public class ProductUnit {
                 ", amount_kg=" + amount_kg +
                 ", isUnique=" + isUnique +
                 '}';
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public ProductUnit() { }

@@ -39,9 +39,8 @@ public class OrderToArrive {
     @Override
     public String toString() {
         return "OrderToArrive{" +
-                "products=" + products +
-                ", provider=" + provider +
-                ", orderID=" + orderID +
-                '}';
+                "products=" + products + "\n" +
+                "provider=" + provider + "\n" +
+                "orderID=" + orderID + "}\n";
     }
 }

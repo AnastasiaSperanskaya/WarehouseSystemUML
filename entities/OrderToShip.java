@@ -39,9 +39,8 @@ public class OrderToShip {
     @Override
     public String toString() {
         return "OrderToShip{" +
-                "products=" + products +
-                ", customer=" + customer +
-                ", orderID=" + orderID +
-                '}';
+                "products=" + products + "\n" +
+                "customer=" + customer + "\n" +
+                "orderID=" + orderID + "}\n";
     }
 }
