@@ -19,10 +19,14 @@ public class Arrival {
             DBManager dbmanager = new DBManager();
             int orderID = dbmanager.getAvailableOrderID();
 
+            System.out.println("Enter provider's id: ");
+            int providerID = scanner.nextInt();
+
             for(int i = 0; i < count; i++) {
                 String str_input;
                 int int_input;
                 ProductUnit product = new ProductUnit();
+                product.setStatus("Waiting for arrival");
 
                 System.out.println("Enter product's id: ");
                 int_input = scanner.nextInt();
@@ -39,22 +43,6 @@ public class Arrival {
                 System.out.println("Enter product's length in cm: ");
                 int_input = scanner.nextInt();
                 product.setLength_cm(int_input);
-
-                System.out.println("Is the product unique or we must change amount? ");
-                System.out.println("[ yes / no ]");
-                str_input = scanner.nextLine();
-                str_input = scanner.nextLine();
-                if (str_input.equals("yes")) {
-                    product.setUnique(true);
-                } else {
-                    product.setUnique(false);
-                    System.out.println("Enter product's amount in kg: ");
-                    double dbl_input = scanner.nextDouble();
-                    product.setAmount_kg(dbl_input);
-                }
-
-                System.out.println("Enter provider's id: ");
-                int providerID = scanner.nextInt();
 
                 dbmanager.setProductUnit(product);
                 dbmanager.setOrderToArrive(product.getProductID(), orderID, providerID);

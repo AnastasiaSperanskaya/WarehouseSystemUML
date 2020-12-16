@@ -18,11 +18,13 @@ public class Shipment {
             DBManager dbmanager = new DBManager();
             int orderID = dbmanager.getAvailableOrderID();
 
+            System.out.println("Enter customer's id: ");
+            int customerID = scanner.nextInt();
+
             for(int i = 0; i < count; i++) {
                 System.out.println("Enter product's id: ");
                 int productID = scanner.nextInt();
-                System.out.println("Enter customer's id: ");
-                int customerID = scanner.nextInt();
+                dbmanager.setProductUnitStatus(productID, "waiting for shipment");
                 dbmanager.setOrderToShip(productID, orderID, customerID);
             }
 

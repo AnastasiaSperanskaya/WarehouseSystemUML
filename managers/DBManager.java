@@ -63,13 +63,12 @@ public class DBManager {
     }
 
     public void setProductUnit(ProductUnit product) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO product_unit (productID, height_cm, width_cm, length_cm, is_unique, amount_kg) VALUES (?, ?, ?, ?, ?, ?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO product_unit (productID, height_cm, width_cm, length_cm, status) VALUES (?, ?, ?, ?, ?)");
         statement.setInt(1, product.getProductID());
         statement.setInt(2, product.getHeight_cm());
         statement.setInt(3, product.getWidth_cm());
         statement.setInt(4, product.getLength_cm());
-        statement.setBoolean(5, product.isUnique());
-        statement.setDouble(6, product.getAmount_kg());
+        statement.setString(5, product.getStatus());
         statement.executeUpdate();
     }
 
@@ -142,13 +141,12 @@ public class DBManager {
         ResultSet productUnit = statement.executeQuery();
 
         while(productUnit.next()) {
-            product.setAmount_kg(productUnit.getInt("amount_kg"));
+            product.setStatus(productUnit.getString("status"));
             product.setHeight_cm(productUnit.getInt("height_cm"));
             product.setLength_cm(productUnit.getInt("length_cm"));
             product.setWidth_cm(productUnit.getInt("width_cm"));
             product.setProductID(productUnit.getInt("productID"));
             product.setPlaceID(productUnit.getInt("placeID"));
-            product.setUnique(productUnit.getBoolean("is_unique"));
         }
 
         return product;

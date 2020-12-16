@@ -3,12 +3,9 @@ package entities;
 public class ProductUnit {
     private int productID;
     private int placeID;
-    private Long barCode;
     private int height_cm;
     private int width_cm;
     private int length_cm;
-    private double amount_kg;
-    private boolean isUnique;
     public String status = "waiting for arrival"; // waiting for arrival / arrived / waiting for shipment / shipped
 
     @Override
@@ -16,12 +13,9 @@ public class ProductUnit {
         return "ProductUnit{" +
                 "productID=" + productID +
                 ", placeID=" + placeID +
-                ", barCode=" + barCode +
                 ", height_cm=" + height_cm +
                 ", width_cm=" + width_cm +
                 ", length_cm=" + length_cm +
-                ", amount_kg=" + amount_kg +
-                ", isUnique=" + isUnique +
                 '}';
     }
 
@@ -34,11 +28,6 @@ public class ProductUnit {
     }
 
     public ProductUnit() { }
-
-    public void changeAmount(String sign, double amount) {
-        if(sign.equals("-")) this.amount_kg = this.amount_kg - amount;
-        else this.amount_kg = this.amount_kg + amount;
-    }
 
     public int getProductID() {
         return this.productID;
@@ -65,16 +54,4 @@ public class ProductUnit {
     public int getLength_cm() { return length_cm; }
 
     public void setLength_cm(int length_cm) { this.length_cm = length_cm; }
-
-    public double getAmount_kg() { return amount_kg; }
-
-    public void setAmount_kg(double amount_kg) { this.amount_kg = amount_kg; }
-
-    public boolean isUnique() { return isUnique; }
-
-    public void setUnique(boolean unique) { isUnique = unique; }
-
-    public Long getBarCode() { return barCode; }
-
-    public void setBarCode(Long barCode) { this.barCode = barCode; }
 }
