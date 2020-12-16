@@ -90,8 +90,11 @@ public class DBManager {
             shipments = connection.prepareStatement("SELECT * FROM orders where orderID = ? and type = 'ship' ");
             shipments.setInt(1, i);
             ResultSet ordersToShip = shipments.executeQuery();
+
+            OrderToShip orderToShip = new OrderToShip();
+
             while (ordersToShip.next()) {
-                OrderToShip orderToShip = new OrderToShip();
+                //OrderToShip orderToShip = new OrderToShip();
 
                 customerID = ordersToShip.getInt("customerID");
                 productID = ordersToShip.getInt("productID");
@@ -104,15 +107,20 @@ public class DBManager {
                 orderToShip.setProduct(product);
                 orderToShip.setOrderID(orderID);
 
-                orders.setOrderToShip(orderToShip);
+                //orders.setOrderToShip(orderToShip);
             }
+
+            orders.setOrderToShip(orderToShip);
 
             PreparedStatement arrivals = null;
             arrivals = connection.prepareStatement("SELECT * FROM orders where orderID = ? and type = 'arrive' ");
             arrivals.setInt(1, i);
             ResultSet ordersToArrive = arrivals.executeQuery();
+
+            OrderToArrive orderToArrive = new OrderToArrive();
+
             while (ordersToArrive.next()) {
-                OrderToArrive orderToArrive = new OrderToArrive();
+                //OrderToArrive orderToArrive = new OrderToArrive();
 
                 providerID = ordersToArrive.getInt("providerID");
                 productID = ordersToArrive.getInt("productID");
@@ -125,8 +133,10 @@ public class DBManager {
                 orderToArrive.setProduct(product);
                 orderToArrive.setOrderID(orderID);
 
-                orders.setOrderToArrive(orderToArrive);
+                //orders.setOrderToArrive(orderToArrive);
             }
+
+            orders.setOrderToArrive(orderToArrive);
         }
 
         return orders;
@@ -248,7 +258,6 @@ public class DBManager {
     public static void main(String[] args) throws SQLException {
         DBManager manager = new DBManager();
         OrdersManager orders = manager.getOrders();
-
-        System.out.println(manager.generatePlace(1, 1, 1));
+        System.out.println(orders.toString());
     }
 }
