@@ -12,19 +12,27 @@ public class DBManager {
     private static final String URL = "jdbc:mysql://localhost:3306/warehouse?useSSL=false";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "rootroot";
+    private static Connection connection;
 
-    public static Connection connectDB() throws SQLException {
+    public static void setConnection(Connection connection) {
+        DBManager.connection = connection;
+    }
+
+    public void connectDB() throws SQLException {
         Connection connection;
         Driver driver = new FabricMySQLDriver();
         DriverManager.registerDriver(driver);
         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-        return connection;
+        setConnection(connection);
         //connection.close();
     }
 
+    public DBManager() throws SQLException {
+        connectDB();
+    }
+
     public void setOrderToShip(int productID, int orderID, int customerID) throws SQLException {
-        Connection connection = connectDB();
         PreparedStatement statement = connection.prepareStatement("INSERT INTO orders (type, orderID, productID, customerID) VALUES (?, ?, ?, ?)");
         statement.setString(1, "ship");
         statement.setInt(2, orderID);
@@ -34,7 +42,6 @@ public class DBManager {
     }
 
     public void setOrderToArrive(int productID, int orderID, int providerID) throws SQLException {
-        Connection connection = connectDB();
         PreparedStatement statement = connection.prepareStatement("INSERT INTO orders (type, orderID, productID, providerID) VALUES (?, ?, ?, ?)");
         statement.setString(1, "arrive");
         statement.setInt(2, orderID);
@@ -44,7 +51,6 @@ public class DBManager {
     }
 
     public int getAvailableOrderID() throws SQLException {
-        Connection connection = connectDB();
         Statement statement = connection.createStatement();
         int orderID = 0;
         String sql = "SELECT MAX(orderID) from orders;";
@@ -57,7 +63,6 @@ public class DBManager {
     }
 
     public void setProductUnit(ProductUnit product) throws SQLException {
-        Connection connection = connectDB();
         PreparedStatement statement = connection.prepareStatement("INSERT INTO product_unit (productID, height_cm, width_cm, length_cm, is_unique, amount_kg) VALUES (?, ?, ?, ?, ?, ?)");
         statement.setInt(1, product.getProductID());
         statement.setInt(2, product.getHeight_cm());
@@ -75,7 +80,6 @@ public class DBManager {
         int providerID;
         int orderID;
         OrdersManager orders = new OrdersManager();
-        Connection connection = connectDB();
         Statement statement = connection.createStatement();
         String sql = "SELECT DISTINCT orderID from orders;";
         ResultSet rs = statement.executeQuery(sql);
@@ -132,7 +136,6 @@ public class DBManager {
     public ProductUnit getProductUnitByID(int productId) throws SQLException {
         ProductUnit product = new ProductUnit();
 
-        Connection connection = connectDB();
         PreparedStatement statement = null;
         statement = connection.prepareStatement("SELECT * FROM product_unit where productID = ?");
         statement.setInt(1, productId);
@@ -154,7 +157,6 @@ public class DBManager {
     public Client getCustomerByID(int customerId) throws SQLException {
         Client customer = new Client();
 
-        Connection connection = connectDB();
         PreparedStatement statement = null;
         statement = connection.prepareStatement("SELECT * FROM customers where customerID = ?");
         statement.setInt(1, customerId);
@@ -174,7 +176,6 @@ public class DBManager {
     public Client getProviderByID(int providerId) throws SQLException {
         Client provider = new Client();
 
-        Connection connection = connectDB();
         PreparedStatement statement = null;
         statement = connection.prepareStatement("SELECT * FROM providers where providerID = ?");
         statement.setInt(1, providerId);
@@ -192,38 +193,64 @@ public class DBManager {
     }
 
     public void deleteProductUnitByID(int productID) throws SQLException {
-        Connection connection = connectDB();
         PreparedStatement statement = connection.prepareStatement("DELETE FROM product_unit WHERE productID = ?");
         statement.setInt(1, productID);
         statement.executeUpdate();
     }
 
     public void deleteOrderByID(int orderID) throws SQLException {
-        Connection connection = connectDB();
         PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE orderID = ?");
         statement.setInt(1, orderID);
         statement.executeUpdate();
     }
 
     public void freePlace(int productID) throws SQLException {
-        Connection connection = connectDB();
         PreparedStatement statement = connection.prepareStatement("UPDATE place SET productID = NULL WHERE productID = ?");
         statement.setInt(1, productID);
         statement.executeUpdate();
     }
 
     public void setProductUnitStatus(int productID, String status) throws SQLException {
-        Connection connection = connectDB();
         PreparedStatement statement = connection.prepareStatement("UPDATE product_unit SET status = ? WHERE productID = ?");
         statement.setInt(2, productID);
         statement.setString(1, status);
         statement.executeUpdate();
     }
 
+    public void setPlace(int productID, int placeID) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("UPDATE product_unit SET placeID = ? WHERE productID = ?");
+        statement.setInt(1, placeID);
+        statement.setInt(2, productID);
+        statement.executeUpdate();
+
+        statement = connection.prepareStatement("UPDATE place SET productID = ? WHERE placeID = ?");
+        statement.setInt(2, placeID);
+        statement.setInt(1, productID);
+        statement.executeUpdate();
+    }
+
+    public static int generatePlace(int height_cm, int width_cm, int length_cm) throws SQLException {
+        int placeID = -1;
+        DBManager manager = new DBManager();
+
+        PreparedStatement statement = null;
+        statement = connection.prepareStatement("SELECT * FROM place where height_cm >= ? and width_cm >= ? and length_cm >= ? and productID IS NULL");
+        statement.setInt(1, height_cm);
+        statement.setInt(2, width_cm);
+        statement.setInt(3, length_cm);
+        ResultSet rs = statement.executeQuery();
+
+        while(rs.next()) {
+            placeID = rs.getInt("placeID");
+        }
+
+        return placeID;
+    }
+
     public static void main(String[] args) throws SQLException {
         DBManager manager = new DBManager();
         OrdersManager orders = manager.getOrders();
 
-        System.out.println(orders.toString());
+        System.out.println(manager.generatePlace(1, 1, 1));
     }
 }

@@ -3,9 +3,7 @@ import entities.OrderToArrive;
 import entities.OrderToShip;
 import managers.DBManager;
 import managers.OrdersManager;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -63,10 +61,46 @@ public class Managing {
         } else if(input.equals("arrival")) {
             //here we must give all information about this order (place, provider etc.)
             List<OrderToArrive> ordersToArrive = orders.getOrdersToArrive();
+            ordersToArrive.forEach((orderToArrive) -> {
+                System.out.println(orderToArrive.toString());
+            });
+            System.out.println("Enter the orderID of order you had executed: ");
+            int orderID = scanner.nextInt();
+            scanner.nextLine();
+
             //generate places for each product
+            //set statuses to arrived
+            ordersToArrive.forEach((orderToArrive) -> {
+                if(orderToArrive.getOrderID() == orderID) {
+                    orderToArrive.getProducts().forEach((product) -> {
+                        try {
+                            manager.setProductUnitStatus(product.getProductID(), "arrived");
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+
+                        int placeID = -1;
+
+                        try {
+                            placeID = manager.generatePlace(product.getHeight_cm(), product.getWidth_cm(), product.getLength_cm());
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+
+                        try {
+                            manager.setPlace(product.getProductID(), placeID);
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                    });
+                }
+            });
 
             //delete information about this order to arrive
+            manager.deleteOrderByID(orderID);
 
+            System.out.println("Database stats successfully updated!");
+            System.out.println();
         } else { System.out.println("There is no service of this kind"); }
     }
 }
