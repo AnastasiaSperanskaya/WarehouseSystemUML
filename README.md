@@ -18,3 +18,16 @@ The project made with UML diagrams as it is the part of co-named course.
 
 ## Use Case Diagram
 ![Use Case Diagram](https://github.com/AnastasiaSperanskaya/WarehouseSystemUML/blob/main/UML/useCaseDiagram.png)
+
+## Sequence Diagrams
+### Sequence Diagram 1
+![Sequence Diagram 1](https://github.com/AnastasiaSperanskaya/WarehouseSystemUML/blob/main/UML/sequenceDiagram1.png)
+
+### Sequence Diagram 2
+![Sequence Diagram 2](https://github.com/AnastasiaSperanskaya/WarehouseSystemUML/blob/main/UML/sequenceDiagram2.png)
+
+### Sequence Diagram 3
+![Sequence Diagram 3](https://github.com/AnastasiaSperanskaya/WarehouseSystemUML/blob/main/UML/sequenceDiagram3.png)
+
+## State Machine Diagram
+![Use Case Diagram](https://github.com/AnastasiaSperanskaya/WarehouseSystemUML/blob/main/UML/stateMachine1.png)
