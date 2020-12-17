@@ -1,7 +1,5 @@
 package managers;
-import java.awt.*;
 import java.sql.*;
-
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import entities.Client;
 import entities.OrderToArrive;

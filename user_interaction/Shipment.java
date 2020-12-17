@@ -1,6 +1,5 @@
 package user_interaction;
 import managers.DBManager;
-
 import java.sql.SQLException;
 import java.util.Scanner;
 
