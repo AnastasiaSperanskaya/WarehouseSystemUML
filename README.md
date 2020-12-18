@@ -29,5 +29,9 @@ The project made with UML diagrams as it is the part of co-named course.
 ### Sequence Diagram 3
 ![Sequence Diagram 3](https://github.com/AnastasiaSperanskaya/WarehouseSystemUML/blob/main/UML/sequenceDiagram3.png)
 
-## State Machine Diagram
-![Use Case Diagram](https://github.com/AnastasiaSperanskaya/WarehouseSystemUML/blob/main/UML/stateMachine1.png)
+## State Machine Diagrams
+### State Machine Diagram 1
+![State Machine Diagram 1](https://github.com/AnastasiaSperanskaya/WarehouseSystemUML/blob/main/UML/stateMachine1.png)
+
+### State Machine Diagram 2
+![State Machine Diagram 2](https://github.com/AnastasiaSperanskaya/WarehouseSystemUML/blob/main/UML/stateMachine2.png)
